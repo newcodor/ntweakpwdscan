@@ -1,7 +1,7 @@
 ﻿@echo off&setlocal enabledelayedexpansion
 title build ntweakpwdscan
 chcp 65001 >nul
-@set version=v1.1
+@set version=v1.0
 @set output=ntweakpwdscan
 @set  build_dir=build
 @if not exist %build_dir% (
@@ -18,6 +18,10 @@ chcp 65001 >nul
 @echo build windows/amd64 …… %build_dir%/%outfilename%
 @set GOOS=windows&&set GOARCH=amd64&& go1.20.14 build -trimpath  -ldflags "-w -s"  -o %build_dir%/%outfilename%  main.go
 
+@set outfilename=%output%_windows_arm64_%version%.exe
+@echo build windows/arm64 …… %build_dir%/%outfilename%
+@set GOOS=windows&&set GOARCH=arm64&& go1.20.14 build -trimpath  -ldflags "-w -s"  -o %build_dir%/%outfilename%  main.go
+
 @set CGO_ENABLED=0
 
 @set outfilename=%output%_linux_386_%version%
@@ -31,5 +35,10 @@ chcp 65001 >nul
 @set outfilename=%output%_darwin_amd64_%version%
 @echo build darwin/amd64 …… %build_dir%/%outfilename%
 @set GOOS=darwin&&set GOARCH=amd64&& go1.20.14 build  -trimpath -ldflags "-w -s"  -o %build_dir%/%outfilename%   main.go
+
+@set outfilename=%output%_darwin_arm64_%version%
+@echo build darwin/arm64 …… %build_dir%/%outfilename%
+@set GOOS=darwin&&set GOARCH=arm64&& go1.20.14 build  -trimpath -ldflags "-w -s"  -o %build_dir%/%outfilename%   main.go
+
 @echo build finished!
 @pause
